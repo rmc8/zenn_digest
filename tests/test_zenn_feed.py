@@ -9,8 +9,8 @@ import pytz
 sys.path.append(pathlib.Path(__file__).parent.parent.as_posix())
 
 
-from libs.types import ZennConfig
-from libs.zenn_feed import ZennFeed
+from tech_feeds_digest.types import ZennConfig
+from tech_feeds_digest.zenn_feed import ZennFeed
 
 
 @pytest.fixture

@@ -1,8 +1,8 @@
 import tomllib
 from pathlib import Path
 
-from libs import DigestClient
-from libs.types import AppConfig
+from tech_feeds_digest import TechFeedsDigest
+from tech_feeds_digest.types import AppConfig
 
 THIS_DIR = Path(__file__).parent
 CONFIG_PATH = THIS_DIR / "config.toml"
@@ -15,7 +15,7 @@ def get_config(path: Path) -> AppConfig:
 
 def main():
     config = get_config(CONFIG_PATH)
-    client = DigestClient(config)
+    client = TechFeedsDigest(config)
     client.run()
 
 

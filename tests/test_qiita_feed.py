@@ -8,8 +8,8 @@ import pytz
 
 sys.path.append(pathlib.Path(__file__).parent.parent.as_posix())
 
-from libs.qiita_feed import QiitaFeed
-from libs.types import QiitaConfig
+from tech_feeds_digest.qiita_feed import QiitaFeed
+from tech_feeds_digest.types import QiitaConfig
 
 
 @pytest.fixture

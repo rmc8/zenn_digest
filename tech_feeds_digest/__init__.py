@@ -5,7 +5,7 @@ from .types import AppConfig
 from .zenn_feed import ZennFeed
 
 
-class DigestClient:
+class TechFeedsDigest:
     def __init__(self, config: AppConfig):
         self.config = config
 
