@@ -44,4 +44,3 @@ expected_schema: dict[str, pl.DataType] = {
     "published": pl.Datetime("us", "Asia/Tokyo"),
     "source": pl.Utf8(),
 }
-
