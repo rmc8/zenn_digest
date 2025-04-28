@@ -5,13 +5,22 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "feedparser>=6.0.11",
     "httpx>=0.28.1",
     "langchain>=0.3.24",
     "langchain-openai>=0.3.14",
+    "polars>=1.28.1",
+    "pydantic>=2.11.3",
+    "pytz>=2025.2",
+    "tzdata>=2025.2",
 ]
 
 [dependency-groups]
-dev = ["mypy>=1.15.0", "ruff>=0.11.7"]
+dev = [
+    "mypy>=1.15.0",
+ "ruff>=0.11.7",
+ "types-pytz>=2025.2.0.20250326",
+]
 
 
 [tool.ruff]

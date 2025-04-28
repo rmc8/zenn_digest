@@ -1,0 +1,47 @@
+from datetime import datetime
+from typing import Literal, TypedDict
+
+import polars as pl
+
+
+# Config
+class ZennConfig(TypedDict):
+    feeds: list[str]
+
+
+class QiitaConfig(TypedDict):
+    feeds: list[str]
+
+
+class LLMConfig(TypedDict):
+    openai_model: str
+    prompt: str
+
+
+class DiscordConfig(TypedDict):
+    webhook_url: str
+
+
+class AppConfig(TypedDict):
+    lookback_hours: int
+    zenn: ZennConfig
+    qiita: QiitaConfig
+    llm: LLMConfig
+    discord: DiscordConfig
+
+
+# Data Structure
+class FeedData(TypedDict):
+    title: str
+    link: str
+    published: datetime
+    source: Literal["zenn", "qiita"]
+
+
+expected_schema: dict[str, pl.DataType] = {
+    "title": pl.Utf8(),
+    "link": pl.Utf8(),
+    "published": pl.Datetime("us", "Asia/Tokyo"),
+    "source": pl.Utf8(),
+}
+
