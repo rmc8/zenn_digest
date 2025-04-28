@@ -1,0 +1,46 @@
+name: Lint Check
+on:
+    push:
+        branches:
+            - main
+            - dev
+    pull_request:
+    workflow_dispatch:
+jobs:
+    run-lint:
+        runs-on: ubuntu-latest
+        name: Run Lint
+        steps:
+            - name: Check out source repository
+              uses: actions/checkout@v4
+
+            - name: Set up Python environment
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.12"
+
+            - name: Install uv
+              run: pip install uv
+
+            - name: Create and activate virtual environment with uv
+              run: |
+                  uv venv .venv
+                  source .venv/bin/activate
+
+            - name: Install project dependencies (base) with uv
+              run: uv pip install -r pyproject.toml
+
+            - name: Install dev dependencies with uv
+              run: uv pip install -r pyproject.toml --group dev
+
+            - name: Lint with Ruff
+              run: |
+                  uv run ruff check . --output-format=github
+
+            - name: Format with Ruff
+              run: |
+                  uv run ruff format . --check
+
+            - name: Lint with Mypy
+              run: |
+                  uv run mypy . --config-file pyproject.toml
