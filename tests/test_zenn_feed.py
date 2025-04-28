@@ -46,7 +46,7 @@ def test_convert_jst_dt_obj_invalid():
         ZennFeed._convert_jst_dt_obj("invalid date")
 
 
-@patch("libs.zenn_feed.feedparser.parse")
+@patch("tech_feeds_digest.zenn_feed.feedparser.parse")
 def test_parse_filters_by_time(mock_parse, mock_feed):
     mock_parse.return_value = mock_feed
     result_df = ZennFeed._parse("http://dummy", lookback_hours=24)
@@ -55,7 +55,7 @@ def test_parse_filters_by_time(mock_parse, mock_feed):
     assert "Old Entry" not in titles
 
 
-@patch("libs.zenn_feed.feedparser.parse")
+@patch("tech_feeds_digest.zenn_feed.feedparser.parse")
 def test_run_aggregates_feeds(mock_parse):
     now = datetime.now(pytz.timezone("GMT"))
     recent_time_str = now.strftime("%a, %d %b %Y %H:%M:%S %Z")
