@@ -25,7 +25,10 @@ feeds = [
 ]
 
 [qiita]
-feeds = ["https://qiita.com/tags/tauri/feed"]
+feeds = [
+    "https://qiita.com/tags/python/feed",
+    "https://qiita.com/tags/tauri/feed",
+]
 
 [llm]
 openai_model = "gpt-4.1-nano"
