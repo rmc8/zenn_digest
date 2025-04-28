@@ -44,3 +44,7 @@ jobs:
             - name: Lint with Mypy
               run: |
                   uv run mypy . --config-file pyproject.toml
+
+            - name: Run Tests with Pytest
+              run: |
+                  uv run pytest
