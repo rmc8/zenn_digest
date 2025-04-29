@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import cast
 
 from tech_feeds_digest import TechFeedsDigest
-from tech_feeds_digest.typess import AppConfig
+from tech_feeds_digest.types import AppConfig
 
 THIS_DIR = Path(__file__).parent
 CONFIG_PATH = THIS_DIR / "config.toml"
