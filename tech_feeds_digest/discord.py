@@ -39,7 +39,10 @@ class Discord:
             image_url: str | None = message["image_url"]
             if isinstance(image_url, str):
                 embed.set_image(url=image_url)
-            await webhook.send(embed=embed)
+            try:
+                await webhook.send(embed=embed)
+            except Exception as e:
+                print(e)
 
     async def send_messages(self, messages: list[SummarizedData]) -> None:
         """
