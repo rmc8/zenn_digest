@@ -28,6 +28,16 @@ feeds = [
 feeds = [
     "https://qiita.com/tags/python/feed",
     "https://qiita.com/tags/tauri/feed",
+    "https://qiita.com/tags/javascript/feed",
+    "https://qiita.com/tags/astro/feed",
+    "https://qiita.com/tags/flutter/feed",
+    "https://qiita.com/tags/rust/feed",
+    "https://qiita.com/tags/langchain/feed",
+    "https://qiita.com/tags/langgraph/feed",
+    "https://qiita.com/tags/mcp/feed",
+    "https://qiita.com/tags/スクレイピング/feed",
+    "https://qiita.com/tags/svelte/feed",
+    "https://qiita.com/tags/typescript/feed",
 ]
 
 [llm]
