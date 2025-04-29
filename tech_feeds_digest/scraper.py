@@ -2,6 +2,7 @@ from logging import getLogger
 
 import frontmatter
 import httpx
+import yaml
 from bs4 import BeautifulSoup
 
 from .types import ContentData, FeedData, ScrapedData
@@ -144,4 +145,6 @@ class Scraper:
             except httpx.HTTPStatusError as e:
                 logger.error("HTTPStatusError: %s", e)
                 continue
+            except yaml.parser.ParserError as e:
+                logger.error("ParserError: %s", e)
         return data
