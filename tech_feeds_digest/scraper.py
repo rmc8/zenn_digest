@@ -27,9 +27,15 @@ class Scraper:
         md = bs.get_text(strip=True)
         f = frontmatter.loads(md)
         meta = f.metadata
+        # Image_url
+        soup = Scraper._http_get(link)
+        og_image_elm = soup.select_one("meta[property='og:image']")
+        image_url = str(og_image_elm["content"]) if og_image_elm is not None else None
+        # Data
         return {
             "link": link,
             "tags": meta["tags"].split(),
+            "image_url": image_url,
             "content": f.content,
             "author": meta["author"],
         }
@@ -46,10 +52,14 @@ class Scraper:
         # Author
         author_elm = bs.select_one("a.ProfileCard_displayName__gRUeY")
         author = author_elm.get_text(strip=True) if author_elm is not None else "Unknown Author"
+        # Image URL
+        og_image_elm = bs.select_one("meta[property='og:image']")  # type:ignore[assignment]
+        image_url: str | None = str(og_image_elm["content"]) if og_image_elm is not None else None
         # Data
         return {
             "link": link,
             "tags": tags,
+            "image_url": image_url,
             "content": content,
             "author": author,
         }

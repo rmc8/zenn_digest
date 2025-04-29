@@ -41,6 +41,7 @@ class FeedData(TypedDict):
 class ContentData(TypedDict):
     link: str
     tags: list[str]
+    image_url: str | None
     content: str
     author: str
 
@@ -56,6 +57,7 @@ class ScrapedData(TypedDict):
     published: datetime
     source: Literal["zenn", "qiita"]
     tags: list[str]
+    image_url: str | None
     content: str
     author: str
 
