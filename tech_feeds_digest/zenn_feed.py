@@ -55,12 +55,11 @@ class ZennFeed:
         df = pl.DataFrame(data, schema=expected_schema)
         if df.is_empty():
             return df
-        return df.filter(pl.col("published") > (run_time - timedelta(hours=lookback_hours)))
+        return df.filter(pl.col("published") > (run_time - timedelta(hours=lookback_hours + 24)))
 
     @staticmethod
     def run(lookback_hours: int, config: ZennConfig) -> pl.DataFrame:
         """
-        Retrieves articles from configured Zenn feeds within the lookback period and combines them.
 
         Args:
             lookback_hours (int): The number of hours to look back.

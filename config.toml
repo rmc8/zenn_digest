@@ -22,6 +22,8 @@ feeds = [
     "https://zenn.dev/topics/dify/feed",
     "https://zenn.dev/topics/nin/feed",
     "https://zenn.dev/topics/claude/feed",
+    "https://zenn.dev/feed",
+    "https://zenn.dev/zenn/feed",
 ]
 
 [qiita]
