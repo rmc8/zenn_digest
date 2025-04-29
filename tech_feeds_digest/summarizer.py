@@ -9,14 +9,31 @@ from .types import LLMConfig, ScrapedData, SummarizedData
 
 
 class OutputText(BaseModel):
+    """
+    Defines the structure of the output result.
+    """
+
     summarized_text: str = Field(..., description="Summarized text")
 
 
 class Summarizer:
+    """
+    Class responsible for performing text summarization.
+    """
+
     def __init__(self, config: LLMConfig):
+        """
+        Initializes the Summarizer with the given configuration.
+        :param config: Configuration dictionary for the LLM.
+        """
         self.config = config
 
     def _summarize(self, scraped_data: ScrapedData) -> str:
+        """
+        Summarizes the given scraped data.
+        :param scraped_data: The data obtained from scraping.
+        :return: The summarized text.
+        """
         llm = ChatOpenAI(
             model=self.config["openai_model"],
             temperature=self.config["temperature"],
@@ -35,6 +52,11 @@ class Summarizer:
         return cast(OutputText, res).summarized_text
 
     def run(self, scraped_data_list: ScrapedData) -> list[SummarizedData]:
+        """
+        Summarizes a list of scraped data and returns the results.
+        :param scraped_data_list: List of scraped data.
+        :return: List of summarized data with texts.
+        """
         data: list[SummarizedData] = []
         for scraped_data in scraped_data_list:
             record: SummarizedData = {

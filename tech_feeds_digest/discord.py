@@ -5,10 +5,26 @@ from .types import DiscordConfig, SummarizedData
 
 
 class Discord:
+    """
+    A class responsible for sending messages to a Discord channel via webhook.
+    """
+
     def __init__(self, config: DiscordConfig):
+        """
+        Initializes the Discord client with the provided configuration.
+
+        Args:
+            config (DiscordConfig): Configuration dictionary containing webhook URL.
+        """
         self.config = config
 
     async def send_message(self, message: SummarizedData) -> None:
+        """
+        Sends a single summarized message to the Discord webhook.
+
+        Args:
+            message (SummarizedData): The message data to send, including title, link, author, tags, image URL, and summarized text.
+        """
         webhook_url = self.config["webhook_url"]
         async with aiohttp.ClientSession() as session:
             webhook = discord.Webhook.from_url(webhook_url, session=session)
@@ -26,5 +42,11 @@ class Discord:
             await webhook.send(embed=embed)
 
     async def send_messages(self, messages: list[SummarizedData]) -> None:
+        """
+        Sends multiple summarized messages to the Discord webhook.
+
+        Args:
+            messages (list[SummarizedData]): List of message data to send.
+        """
         for message in messages:
             await self.send_message(message)

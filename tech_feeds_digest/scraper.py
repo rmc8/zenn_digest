@@ -10,8 +10,21 @@ logger = getLogger(__name__)
 
 
 class Scraper:
+    """
+    Scraper class for fetching and extracting article data from web pages.
+    """
+
     @staticmethod
     def _http_get(link: str) -> BeautifulSoup:
+        """
+        Sends an HTTP GET request to the specified URL and returns a BeautifulSoup object.
+
+        Args:
+            link (str): The URL to fetch.
+
+        Returns:
+            BeautifulSoup: Parsed HTML content of the response.
+        """
         res = httpx.get(
             link,
             headers={
@@ -23,15 +36,24 @@ class Scraper:
 
     @staticmethod
     def _get_qiita_data(link: str) -> ContentData:
+        """
+        Extracts article data from a Qiita article page.
+
+        Args:
+            link (str): Qiita article URL.
+
+        Returns:
+            ContentData: Extracted article information including link, tags, image URL, content, and author.
+        """
         bs = Scraper._http_get(f"{link}.md")
         md = bs.get_text(strip=True)
         f = frontmatter.loads(md)
         meta = f.metadata
-        # Image_url
+        # Get image URL
         soup = Scraper._http_get(link)
         og_image_elm = soup.select_one("meta[property='og:image']")
         image_url: str | None = str(og_image_elm["content"]) if og_image_elm is not None else None
-        # Data
+        # Return data
         return {
             "link": link,
             "tags": meta["tags"].split(),
@@ -42,20 +64,29 @@ class Scraper:
 
     @staticmethod
     def _get_zenn_data(link: str) -> ContentData:
+        """
+        Extracts article data from a Zenn article page.
+
+        Args:
+            link (str): Zenn article URL.
+
+        Returns:
+            ContentData: Extracted article information including link, tags, image URL, content, and author.
+        """
         bs = Scraper._http_get(link)
-        # Tags
+        # Extract tags
         tag_elms = bs.select("div.View_topics__2sHkl a.View_topicLink__jdtX_")
         tags: list[str] = [tag_elm.get_text(strip=True) for tag_elm in tag_elms]
-        # Content
+        # Extract content
         content_elm = bs.select_one("div.znc.BodyContent_anchorToHeadings__uGxNv")
         content = content_elm.get_text(strip=True) if content_elm is not None else ""
-        # Author
+        # Extract author
         author_elm = bs.select_one("a.ProfileCard_displayName__gRUeY")
         author = author_elm.get_text(strip=True) if author_elm is not None else "Unknown Author"
-        # Image URL
-        og_image_elm = bs.select_one("meta[property='og:image']")  # type:ignore[assignment]
+        # Get image URL
+        og_image_elm = bs.select_one("meta[property='og:image']")
         image_url: str | None = str(og_image_elm["content"]) if og_image_elm is not None else None
-        # Data
+        # Return data
         return {
             "link": link,
             "tags": tags,
@@ -66,6 +97,15 @@ class Scraper:
 
     @staticmethod
     def _get_data(feed_data: FeedData) -> ContentData:
+        """
+        Extracts content data based on the source type from feed data.
+
+        Args:
+            feed_data (FeedData): The feed data containing source and link.
+
+        Returns:
+            ContentData: Extracted content data.
+        """
         source: str | None = feed_data.get("source")
         if isinstance(source, str) and source in ["zenn", "qiita"]:
             link: str | None = feed_data.get("link")
@@ -86,6 +126,15 @@ class Scraper:
 
     @staticmethod
     def run(feed_data_list: list[FeedData]) -> list[ScrapedData]:
+        """
+        Processes a list of feed data entries and returns a list of scraped data.
+
+        Args:
+            feed_data_list (list[FeedData]): List of feed data entries.
+
+        Returns:
+            list[ScrapedData]: List of scraped data records.
+        """
         data: list[ScrapedData] = []
         for feed_data in feed_data_list:
             try:
