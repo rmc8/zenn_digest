@@ -1,13 +1,18 @@
+import sys
+from logging import getLogger
+
 import polars as pl
 
 from .qiita_feed import QiitaFeed
-from .types import AppConfig
+from .scraper import Scraper
+from .types import AppConfig, FeedData, ScrapedData
 from .zenn_feed import ZennFeed
 
 
 class TechFeedsDigest:
     def __init__(self, config: AppConfig):
         self.config = config
+        self.logger = getLogger(__name__)
 
     def _drop_duplicates_by_title(self, df: pl.DataFrame) -> pl.DataFrame:
         if df.is_empty():
@@ -21,8 +26,19 @@ class TechFeedsDigest:
         qf_df = QiitaFeed.run(lookback_hours, self.config["qiita"])
         combined_df = pl.concat([zf_df, qf_df])
         fil_dif = self._drop_duplicates_by_title(combined_df)
+        self.logger.info("Total entries: %s", fil_dif.shape[0])
         return fil_dif
 
+    def _check_no_new_entry(self, df: pl.DataFrame) -> None:
+        if df.is_empty():
+            self.logger.info("No new entries found. Exiting...")
+            sys.exit(0)
+
     def run(self):
+        self.logger.info("Starting TechFeedsDigest")
         feed_df = self._get_feed_data()
-        print(feed_df)
+        self._check_no_new_entry(feed_df)
+        self.logger.info("Scraping data...")
+        feed_data_list: list[FeedData] = feed_df.to_dicts()
+        scraped_data_list: list[ScrapedData] = Scraper.run(feed_data_list)
+        print(scraped_data_list)

@@ -38,6 +38,30 @@ class FeedData(TypedDict):
     source: Literal["zenn", "qiita"]
 
 
+class ContentData(TypedDict):
+    link: str
+    tags: list[str]
+    content: str
+    author: str
+
+
+class ScrapedData(TypedDict):
+    """
+    Represents data for a tech feed entry including scraped content.
+    Merges FeedData and ContentData.
+    """
+
+    title: str
+    link: str
+    published: datetime
+    source: Literal["zenn", "qiita"]
+    tags: list[str]
+    content: str
+    author: str
+
+
+# Polars Schema
+
 expected_schema: dict[str, pl.DataType] = {
     "title": pl.Utf8(),
     "link": pl.Utf8(),
