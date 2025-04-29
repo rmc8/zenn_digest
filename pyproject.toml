@@ -13,6 +13,7 @@ dependencies = [
     "langchain>=0.3.24",
     "langchain-openai>=0.3.14",
     "lxml>=5.4.0",
+    "openai>=1.76.0",
     "polars>=1.28.1",
     "pydantic>=2.11.3",
     "python-frontmatter>=1.1.0",
