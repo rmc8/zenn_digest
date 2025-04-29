@@ -9,7 +9,7 @@ class Discord:
     A class responsible for sending messages to a Discord channel via webhook.
     """
 
-    MAX_LENGTH = 1028
+    MAX_LENGTH = 1600
 
     def __init__(self, config: DiscordConfig):
         """
