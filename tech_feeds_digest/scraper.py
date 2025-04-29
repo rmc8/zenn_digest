@@ -1,8 +1,8 @@
 from logging import getLogger
 
-import yaml
 import frontmatter
 import httpx
+import yaml
 from bs4 import BeautifulSoup
 
 from .types import ContentData, FeedData, ScrapedData
