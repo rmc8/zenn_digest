@@ -86,8 +86,6 @@ class Scraper:
                 content_data: ContentData = Scraper._get_data(feed_data)
                 record: ScrapedData = {**feed_data, **content_data}
                 data.append(record)
-                if len(data) >= 5:
-                    break
             except httpx.HTTPStatusError as e:
                 logger.error("HTTPStatusError: %s", e)
                 continue
