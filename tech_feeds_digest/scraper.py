@@ -30,7 +30,7 @@ class Scraper:
         # Image_url
         soup = Scraper._http_get(link)
         og_image_elm = soup.select_one("meta[property='og:image']")
-        image_url = str(og_image_elm["content"]) if og_image_elm is not None else None
+        image_url: str | None = str(og_image_elm["content"]) if og_image_elm is not None else None
         # Data
         return {
             "link": link,
