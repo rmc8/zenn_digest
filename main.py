@@ -1,3 +1,4 @@
+import asyncio
 import tomllib
 from pathlib import Path
 from typing import cast
@@ -15,11 +16,11 @@ def get_config(path: Path) -> AppConfig:
         return cast(AppConfig, conf)
 
 
-def main():
+async def main():
     config = get_config(CONFIG_PATH)
     client = TechFeedsDigest(config)
-    client.run()
+    await client.run()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

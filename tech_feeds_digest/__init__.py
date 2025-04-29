@@ -3,6 +3,7 @@ from logging import getLogger
 
 import polars as pl
 
+from .discord import Discord
 from .qiita_feed import QiitaFeed
 from .scraper import Scraper
 from .summarizer import Summarizer
@@ -35,7 +36,7 @@ class TechFeedsDigest:
             self.logger.info("No new entries found. Exiting...")
             sys.exit(0)
 
-    def run(self):
+    async def run(self):
         self.logger.info("Starting TechFeedsDigest")
         feed_df = self._get_feed_data()
         # Check if there are new entries
@@ -50,4 +51,8 @@ class TechFeedsDigest:
         summarized_data_list: list[SummarizedData] = s.run(
             scraped_data_list=scraped_data_list,  # type:ignore
         )
-        print(summarized_data_list[0]["summarized_text"])
+        # Sending message
+        self.logger.info("Sending message...")
+        d = Discord(self.config["discord"])
+        await d.send_messages(summarized_data_list)
+        self.logger.info("TechFeedsDigest finished!")
