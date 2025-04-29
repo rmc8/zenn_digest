@@ -9,6 +9,8 @@ class Discord:
     A class responsible for sending messages to a Discord channel via webhook.
     """
 
+    MAX_LENGTH = 1600
+
     def __init__(self, config: DiscordConfig):
         """
         Initializes the Discord client with the provided configuration.
@@ -37,9 +39,12 @@ class Discord:
             embed.set_author(name=message["author"])
             embed.add_field(name="Tags", value=", ".join(message["tags"]), inline=False)
             image_url: str | None = message["image_url"]
-            if isinstance(image_url, str):
+            if isinstance(image_url, str) and len(image_url) <= self.MAX_LENGTH:
                 embed.set_image(url=image_url)
-            await webhook.send(embed=embed)
+            try:
+                await webhook.send(embed=embed)
+            except Exception as e:
+                print(e)
 
     async def send_messages(self, messages: list[SummarizedData]) -> None:
         """
