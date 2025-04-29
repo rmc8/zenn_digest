@@ -45,11 +45,7 @@ class Scraper:
         content = content_elm.get_text(strip=True) if content_elm is not None else ""
         # Author
         author_elm = bs.select_one("a.ProfileCard_displayName__gRUeY")
-        author = (
-            author_elm.get_text(strip=True)
-            if author_elm is not None
-            else "Unknown Author"
-        )
+        author = author_elm.get_text(strip=True) if author_elm is not None else "Unknown Author"
         # Data
         return {
             "link": link,

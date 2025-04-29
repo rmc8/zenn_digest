@@ -98,9 +98,7 @@ def test_run_multiple_entries(monkeypatch):
     # すべてのfeed_dataを処理
     mock_content = {"link": "link", "tags": [], "content": "", "author": ""}
 
-    with patch.object(
-        scraper.Scraper, "_get_data", return_value=mock_content
-    ) as mock_get_data:
+    with patch.object(scraper.Scraper, "_get_data", return_value=mock_content) as mock_get_data:
         feed_list: list[FeedData] = [
             {"title": "t1", "link": "l1", "source": "qiita"},  # type:ignore
             {"title": "t2", "link": "l2", "source": "zenn"},  # type:ignore
