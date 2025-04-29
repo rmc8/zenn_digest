@@ -15,6 +15,8 @@ class QiitaConfig(TypedDict):
 
 class LLMConfig(TypedDict):
     openai_model: str
+    language: str
+    temperature: float
     prompt: str
 
 
@@ -60,6 +62,18 @@ class ScrapedData(TypedDict):
     image_url: str | None
     content: str
     author: str
+
+
+class SummarizedData(TypedDict):
+    title: str
+    link: str
+    published: datetime
+    source: Literal["zenn", "qiita"]
+    tags: list[str]
+    image_url: str | None
+    content: str
+    author: str
+    summarized_text: str
 
 
 # Polars Schema

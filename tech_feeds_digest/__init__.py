@@ -5,7 +5,8 @@ import polars as pl
 
 from .qiita_feed import QiitaFeed
 from .scraper import Scraper
-from .types import AppConfig, FeedData, ScrapedData
+from .summarizer import Summarizer
+from .types import AppConfig, FeedData, ScrapedData, SummarizedData
 from .zenn_feed import ZennFeed
 
 
@@ -37,8 +38,16 @@ class TechFeedsDigest:
     def run(self):
         self.logger.info("Starting TechFeedsDigest")
         feed_df = self._get_feed_data()
+        # Check if there are new entries
         self._check_no_new_entry(feed_df)
+        # Scraping
         self.logger.info("Scraping data...")
         feed_data_list: list[FeedData] = feed_df.to_dicts()
         scraped_data_list: list[ScrapedData] = Scraper.run(feed_data_list)
-        print(scraped_data_list)
+        # Summarizing
+        self.logger.info("Summarizing data...")
+        s = Summarizer(self.config["llm"])
+        summarized_data_list: list[SummarizedData] = s.run(
+            scraped_data_list=scraped_data_list,  # type:ignore
+        )
+        print(summarized_data_list[0]["summarized_text"])

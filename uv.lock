@@ -1072,6 +1072,7 @@ dependencies = [
     { name = "python-frontmatter" },
     { name = "pytz" },
     { name = "pyyaml" },
+    { name = "tqdm" },
     { name = "tzdata" },
 ]
 
@@ -1096,6 +1097,7 @@ requires-dist = [
     { name = "python-frontmatter", specifier = ">=1.1.0" },
     { name = "pytz", specifier = ">=2025.2" },
     { name = "pyyaml", specifier = ">=6.0.2" },
+    { name = "tqdm", specifier = ">=4.67.1" },
     { name = "tzdata", specifier = ">=2025.2" },
 ]
 

@@ -1,4 +1,4 @@
-lookback_hours = 24
+lookback_hours = 1
 
 [zenn]
 feeds = [
@@ -32,7 +32,11 @@ feeds = [
 
 [llm]
 openai_model = "gpt-4.1-nano"
+language = "Japanese"
+temperature = 0.0
 prompt = """
+Your role is to summarize articles retrieved from RSS feeds clearly. The user will provide articles they have not read. Assume the perspective of someone who hasn't read the article, and create summaries that are easy to understand and encourage the user to read the full text. Output the summarized result in the specified Language.
+Language: {{language}}
 """
 
 [discord]
