@@ -1,0 +1,53 @@
+lookback_hours = 1
+
+[zenn]
+feeds = [
+    "https://zenn.dev/topics/ai/feed",
+    "https://zenn.dev/topics/chatgpt/feed",
+    "https://zenn.dev/topics/flutter/feed",
+    "https://zenn.dev/topics/go/feed",
+    "https://zenn.dev/topics/langchain/feed",
+    "https://zenn.dev/topics/langgraph/feed",
+    "https://zenn.dev/topics/llm/feed",
+    "https://zenn.dev/topics/mcp/feed",
+    "https://zenn.dev/topics/nodejs/feed",
+    "https://zenn.dev/topics/rust/feed",
+    "https://zenn.dev/topics/svelte/feed",
+    "https://zenn.dev/topics/typescript/feed",
+    "https://zenn.dev/topics/javascript/feed",
+    "https://zenn.dev/topics/raspberrypi/feed",
+    "https://zenn.dev/topics/githubactions/feed",
+    "https://zenn.dev/topics/tailwindcss/feed",
+    "https://zenn.dev/topics/機械学習/feed",
+    "https://zenn.dev/topics/dify/feed",
+    "https://zenn.dev/topics/nin/feed",
+    "https://zenn.dev/topics/claude/feed",
+]
+
+[qiita]
+feeds = [
+    "https://qiita.com/tags/python/feed",
+    "https://qiita.com/tags/tauri/feed",
+    "https://qiita.com/tags/javascript/feed",
+    "https://qiita.com/tags/astro/feed",
+    "https://qiita.com/tags/flutter/feed",
+    "https://qiita.com/tags/rust/feed",
+    "https://qiita.com/tags/langchain/feed",
+    "https://qiita.com/tags/langgraph/feed",
+    "https://qiita.com/tags/mcp/feed",
+    "https://qiita.com/tags/スクレイピング/feed",
+    "https://qiita.com/tags/svelte/feed",
+    "https://qiita.com/tags/typescript/feed",
+]
+
+[llm]
+openai_model = "gpt-4.1-nano"
+language = "Japanese"
+temperature = 0.0
+prompt = """
+Your role is to summarize articles retrieved from RSS feeds clearly. The user will provide articles they have not read. Assume the perspective of someone who hasn't read the article, and create summaries that are easy to understand and encourage the user to read the full text. Output the summarized result in the specified Language.
+Language: {{language}}
+"""
+
+[discord]
+webhook_url = "https://discord.com/api/webhooks/123456789012345678/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"

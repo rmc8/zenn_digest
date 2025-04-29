@@ -1,1 +1,1 @@
-# zenn_digest
+# tech_feeds_digest
