@@ -6,7 +6,7 @@ import pytz
 
 from .types import FeedData, ZennConfig, expected_schema
 
-run_time = datetime.now(pytz.timezone("GMT"))
+run_time = datetime.now(pytz.timezone("Asia/Tokyo"))
 
 
 class ZennFeed:
@@ -27,7 +27,7 @@ class ZennFeed:
         """
         format_str: str = "%a, %d %b %Y %H:%M:%S %Z"
         naive_dt = datetime.strptime(dt_str, format_str)
-        target_tz = pytz.timezone("GMT")
+        target_tz = pytz.timezone("Asia/Tokyo")
         return naive_dt.astimezone(target_tz)
 
     @staticmethod
@@ -55,12 +55,11 @@ class ZennFeed:
         df = pl.DataFrame(data, schema=expected_schema)
         if df.is_empty():
             return df
-        return df.filter(pl.col("published") > (run_time - timedelta(hours=lookback_hours)))
+        return df.filter(pl.col("published") > (run_time - timedelta(hours=lookback_hours + 24)))
 
     @staticmethod
     def run(lookback_hours: int, config: ZennConfig) -> pl.DataFrame:
         """
-        Retrieves articles from configured Zenn feeds within the lookback period and combines them.
 
         Args:
             lookback_hours (int): The number of hours to look back.
