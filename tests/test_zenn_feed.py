@@ -1,7 +1,6 @@
 import pathlib
 import sys
 from datetime import datetime, timedelta
-from unittest.mock import patch
 
 import pytest
 import pytz
@@ -9,7 +8,6 @@ import pytz
 sys.path.append(pathlib.Path(__file__).parent.parent.as_posix())
 
 
-from tech_feeds_digest.types import ZennConfig
 from tech_feeds_digest.zenn_feed import ZennFeed
 
 
