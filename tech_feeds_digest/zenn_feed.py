@@ -6,7 +6,7 @@ import pytz
 
 from .types import FeedData, ZennConfig, expected_schema
 
-run_time = datetime.now(pytz.timezone("Asia/Tokyo"))
+run_time = datetime.now(pytz.timezone("GMT"))
 
 
 class ZennFeed:
@@ -27,7 +27,7 @@ class ZennFeed:
         """
         format_str: str = "%a, %d %b %Y %H:%M:%S %Z"
         naive_dt = datetime.strptime(dt_str, format_str)
-        target_tz = pytz.timezone("Asia/Tokyo")
+        target_tz = pytz.timezone("GMT")
         return naive_dt.astimezone(target_tz)
 
     @staticmethod
@@ -55,7 +55,9 @@ class ZennFeed:
         df = pl.DataFrame(data, schema=expected_schema)
         if df.is_empty():
             return df
-        return df.filter(pl.col("published") > (run_time - timedelta(hours=lookback_hours)))
+        return df.filter(
+            pl.col("published") > (run_time - timedelta(hours=lookback_hours))
+        )
 
     @staticmethod
     def run(lookback_hours: int, config: ZennConfig) -> pl.DataFrame:
