@@ -17,6 +17,8 @@ def test_instantiate_tech_feeds_digest():
         "qiita": {"feeds": []},
         "llm": {
             "openai_model": "",
+            "language": "",
+            "temperature": 0.0,
             "prompt": "",
         },
         "discord": {"webhook_url": ""},
@@ -32,6 +34,8 @@ def test_drop_duplicates_method():
         "qiita": {"feeds": []},
         "llm": {
             "openai_model": "",
+            "language": "",
+            "temperature": 0.0,
             "prompt": "",
         },
         "discord": {"webhook_url": ""},
@@ -49,6 +53,8 @@ def test_get_feed_data_method_returns_dataframe():
         "qiita": {"feeds": []},
         "llm": {
             "openai_model": "",
+            "language": "",
+            "temperature": 0.0,
             "prompt": "",
         },
         "discord": {"webhook_url": ""},
