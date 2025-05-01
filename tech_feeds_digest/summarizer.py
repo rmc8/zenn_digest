@@ -33,9 +33,9 @@ class Summarizer:
         """
         self.config = config
         self.api_key: SecretStr | None = None
-        if isinstance(str, api_key):
+        if isinstance(SecretStr, api_key):
             self.api_key = SecretStr(api_key)
-        elif isinstance(str, os.getenv("OPENAI_API_KEY")):
+        elif isinstance(SecretStr, os.getenv("OPENAI_API_KEY")):
             self.api_key = SecretStr(os.getenv("OPENAI_API_KEY"))
 
     def _summarize(self, scraped_data: ScrapedData) -> str:
