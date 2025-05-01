@@ -55,7 +55,7 @@ class ZennFeed:
         df = pl.DataFrame(data, schema=expected_schema)
         if df.is_empty():
             return df
-        return df.filter(pl.col("published") > (run_time - timedelta(hours=lookback_hours + 24)))
+        return df.filter(pl.col("published") > (run_time - timedelta(hours=lookback_hours + 9)))
 
     @staticmethod
     def run(lookback_hours: int, config: ZennConfig) -> pl.DataFrame:

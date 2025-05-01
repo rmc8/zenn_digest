@@ -1,3 +1,4 @@
+import os
 from logging import getLogger
 from typing import cast
 
@@ -5,7 +6,7 @@ import openai
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, SecretStr
 
 from .types import LLMConfig, ScrapedData, SummarizedData
 
@@ -25,12 +26,17 @@ class Summarizer:
     Class responsible for performing text summarization.
     """
 
-    def __init__(self, config: LLMConfig):
+    def __init__(self, config: LLMConfig, api_key: str | None = None):
         """
         Initializes the Summarizer with the given configuration.
         :param config: Configuration dictionary for the LLM.
         """
         self.config = config
+        self.api_key: SecretStr | None = None
+        if isinstance(SecretStr, api_key):
+            self.api_key = SecretStr(api_key)
+        elif isinstance(SecretStr, os.getenv("OPENAI_API_KEY")):
+            self.api_key = SecretStr(os.getenv("OPENAI_API_KEY"))
 
     def _summarize(self, scraped_data: ScrapedData) -> str:
         """
@@ -40,6 +46,7 @@ class Summarizer:
         """
         llm = ChatOpenAI(
             model=self.config["openai_model"],
+            api_key=self.api_key,
             temperature=self.config["temperature"],
         )
         system_message = SystemMessage(
