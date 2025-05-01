@@ -1,3 +1,4 @@
+import os
 from logging import getLogger
 from typing import cast
 
@@ -25,12 +26,13 @@ class Summarizer:
     Class responsible for performing text summarization.
     """
 
-    def __init__(self, config: LLMConfig):
+    def __init__(self, config: LLMConfig, api_key: str | None = None):
         """
         Initializes the Summarizer with the given configuration.
         :param config: Configuration dictionary for the LLM.
         """
         self.config = config
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
 
     def _summarize(self, scraped_data: ScrapedData) -> str:
         """
@@ -40,6 +42,7 @@ class Summarizer:
         """
         llm = ChatOpenAI(
             model=self.config["openai_model"],
+            api_key=self.api_key,
             temperature=self.config["temperature"],
         )
         system_message = SystemMessage(
