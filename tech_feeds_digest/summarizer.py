@@ -6,7 +6,7 @@ import openai
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, SecretStr
 
 from .types import LLMConfig, ScrapedData, SummarizedData
 
@@ -32,7 +32,11 @@ class Summarizer:
         :param config: Configuration dictionary for the LLM.
         """
         self.config = config
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.api_key: SecretStr | None = None
+        if isinstance(str, api_key):
+            self.api_key = SecretStr(api_key)
+        elif isinstance(str, os.getenv("OPENAI_API_KEY")):
+            self.api_key = SecretStr(os.getenv("OPENAI_API_KEY"))
 
     def _summarize(self, scraped_data: ScrapedData) -> str:
         """
